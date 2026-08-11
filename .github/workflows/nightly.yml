@@ -39,7 +39,7 @@ jobs:
                       -H "Authorization: Bearer $GH_PAT" \
                       -H "Accept: application/vnd.github+json" \
                       -H "X-GitHub-Api-Version: 2022-11-28" \
-                      "https://api.github.com/repos/${OWNER}/${repository}/actions/workflows?per_page=100")
+                      "https://api.github.com/repos/$OWNER/$repository/actions/workflows?per_page=100")
 
                     # Find the Release Pipeline workflow 
                     workflow_id=$(echo "$workflows_json" | jq -r '.workflows[] | select(.name == "Release Pipeline") | .id' | head -n 1)
@@ -55,8 +55,8 @@ jobs:
                     repository_info=$(curl -sS \
                       -H "Authorization: Bearer $GH_PAT" \
                       -H "Accept: application/vnd.github+json" \
-                      -H "X-GitHub-Api-Version: 2022-11-28
-                      "https://api.github.com/repos/${OWNER}/${repository}")
+                      -H "X-GitHub-Api-Version: 2022-11-28" \
+                      "https://api.github.com/repos/$OWNER/$repository")
 
                       branch=$(echo "$repository_info" | jq -r '.default_branch')
 
@@ -68,7 +68,7 @@ jobs:
                       echo "Branch: $branch"
 
                       # Trigger the workflow
-                      dispatch_url="https://api.github.com/repos/${OWNER}/${repository}/actions/workflows/${workflow_id}/dispatches"
+                      dispatch_url="https://api.github.com/repos/$OWNER/$repository/actions/workflows/$workflow_id/dispatches"
 
                       status_code=$(curl -sS \
                         -o /tmp/dispatch_response.txt \
@@ -105,7 +105,7 @@ jobs:
         - name: Collect Component Status
           env:
             OWNER: ${{ env.OWNER }}
-            COMPONENTS: ${{ env.COMPONENTS }}
+            COMPONENTS: "component1 component2 component3 component4 component5"
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
