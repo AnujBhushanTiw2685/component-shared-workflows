@@ -194,7 +194,7 @@ for run in nightly_runs:
         subprocess.run(
             [
                 "python","scripts/fetch_workflow_jobs.py"
-            ]
+            ],
             check=True
             env=env
         )
