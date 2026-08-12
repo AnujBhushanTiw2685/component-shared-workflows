@@ -7,7 +7,7 @@ import shutil
 OWNER = os.environ["OWNER"]
 TOKEN = os.environ["GITHUB_TOKEN"]
 
-DISPATCH_FILE = "artifacts/nightly_dispatch.json"
+DISPATCH_FILE = "artifacts/nightly_dispatches.json"
 
 with open(DISPATCH_FILE,"r") as file:
     dispatches = json.load(file)
