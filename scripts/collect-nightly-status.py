@@ -195,7 +195,7 @@ for run in nightly_runs:
             [
                 "python","scripts/fetch_workflow_jobs.py"
             ],
-            check=True
+            check=True,
             env=env
         )
 
