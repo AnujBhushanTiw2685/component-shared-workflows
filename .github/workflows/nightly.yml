@@ -28,6 +28,9 @@ jobs:
 
           run: |
 
+                mkdir -p artifacts
+                echo "[]" > artifacts/nightly_dispatches.json
+
                 for repository in $(echo "$REPOSITORIES" | jq -r '.[]')
                 do
                     echo "==================================="
@@ -68,6 +71,7 @@ jobs:
                       echo "Branch: $branch"
 
                       # Trigger the workflow
+                      dispatch_time=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
                       dispatch_url="https://api.github.com/repos/$OWNER/$repository/actions/workflows/$workflow_id/dispatches"
 
                       status_code=$(curl -sS \
@@ -82,6 +86,17 @@ jobs:
 
                       if [ "$status_code" = "204" ]; then
                           echo "Successfully triggered the Release Pipeline for $repository."
+
+                          # Store dispatch information
+                          tmp_file=$(mktemp)
+                          jq \
+                            --arg repository "$repository" \
+                            --arg workflow_id "$workflow_id" \
+                            --arg branch "$branch" \
+                            --arg dispatch_time "$dispatch_time" \
+                            '. += [{"repository": $repository, "workflow_id": $workflow_id, "branch": $branch, "dispatch_time": $dispatch_time}]' \
+                            artifacts/nightly_dispatches.json > "$tmp_file"
+                            mv "$tmp_file" artifacts/nightly_dispatches.json
                       else
                           echo "Failed to trigger the Release Pipeline for $repository. Status code: $status_code"
                           cat /tmp/dispatch_response.txt
@@ -91,6 +106,10 @@ jobs:
                     echo
 
                 done
+
+                echo "===== NIGHTLY DISPATCH RECORD ====="
+                cat artifacts/nightly_dispatches.json
+                
 
         # Wait for all workflows to finish
 
