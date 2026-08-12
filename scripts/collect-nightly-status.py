@@ -185,9 +185,18 @@ for run in nightly_runs:
         env["OWNER"] = OWNER
         env["REPOSITORY"] = repository
         env["RUN_ID"] = str(run["run_id"])
+        env["GITHUB_TOKEN"] = TOKEN
 
         env["OUTPUT_SUMMARY_FILE"] = (
             f"artifacts/{repository}_summary.json"
+        )
+
+        subprocess.run(
+            [
+                "python","scripts/fetch_workflow_jobs.py"
+            ]
+            check=True
+            env=env
         )
 
         subprocess.run(
