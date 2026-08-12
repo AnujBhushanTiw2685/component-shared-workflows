@@ -2,7 +2,8 @@ import os
 import json
 import urllib.request
 import subprocess
-import shutil
+from datetime import datetime, timezone
+# import shutil
 
 OWNER = os.environ["OWNER"]
 TOKEN = os.environ["GITHUB_TOKEN"]
@@ -188,8 +189,6 @@ for run in nightly_runs:
         env["OUTPUT_SUMMARY_FILE"] = (
             f"artifacts/{repository}_summary.json"
         )
-        
-        import subprocess
 
         subprocess.run(
             [
