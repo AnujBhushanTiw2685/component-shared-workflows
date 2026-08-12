@@ -3,13 +3,14 @@ import urllib.request
 import zipfile
 import json
 
-with open("artifacts/failed_job.json", "r" ) as file:
-    failed_job = json.load(file)
-RUN_ID = failed_job["run_id"]
+# with open("artifacts/failed_job.json", "r" ) as file:
+#     failed_job = json.load(file)
+# RUN_ID = failed_job["run_id"]
 
 
 OWNER = os.environ["OWNER"]
 REPOSITORY = os.environ["REPOSITORY"]
+RUN_ID = os.environ["RUN_ID"]
 TOKEN = os.environ["GITHUB_TOKEN"]
 
 url = (
