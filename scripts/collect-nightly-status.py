@@ -146,7 +146,7 @@ for run in nightly_runs:
     repository = run["repository"]
 
     # SUCCESS
-    if run["conclusion"] == "success":
+    if run[status] == "completed" and run["conclusion"] == "success":
         summary = {
             "repository": repository,
             "workflow": "Release Pipeline",
@@ -174,7 +174,7 @@ for run in nightly_runs:
         )
 
     # FAILURE
-    elif run["conclusion"] == "failure":
+    elif run[status] == "completed" and run["conclusion"] == "failure":
 
         print(
             f"{repository} -> FAILURE"
@@ -213,7 +213,65 @@ for run in nightly_runs:
             check=True,
             env=env
         )
+    elif run["status"] == "queued":
+        print(
+            f"{repository} -> QUEUED"
+            f"(nightly window expired)"
+        )
+        summary = {
+            "repository": repository,
+            "worflow": "Release Pipeline",
+            "component": repository,
+            "job": "",
+            "status": "QUEUED",
+            "timestamp": "",
+            "error": (
+                "Workflow was still queued when the "
+                "nightly execution window expired."
+            ),
+            "run_id": run["run_id"],
+            "run_url": run["run_url"],
+            "exit_code": ""
 
+        }
+        with open(
+            f"artifacts/{repository}_summary.json",
+            "w"
+        ) as file:
+            json.dump(
+                summary,
+                file,
+                indent=4
+            )
+
+    elif run["status"] == "in_progress":
+
+        summary = {
+            "repository": repository,
+            "workflow": "Release Pipeline",
+            "component": repository,
+            "job": "",
+            "status": "RUNNING",
+            "timestamp": "",
+            "error": (
+                "Workflow was still running when the "
+                "nightly execution window expired."
+            ),
+            "run_id": run["run_id"],
+            "run_url": run["run_url"],
+            "exit_code": ""
+        }
+
+        with open(
+            f"artifacts/{repository}_summary.json",
+            "w"
+        ) as file:
+
+            json.dump(
+                summary,
+                file,
+                indent=4
+            )
 
 # for repository in components:
 

@@ -73,6 +73,8 @@ else:
 
     passed = 0
     failed = 0
+    queued = 0
+    running = 0
 
     for summary in summaries:
 
@@ -81,6 +83,15 @@ else:
         if status.upper() == "SUCCESS":
             css = "success"
             passed += 1
+        elif status.upper() == "FAILURE":
+            css = "failure"
+            failed += 1
+        elif status.upper() == "QUEUED":
+            css = "queued"
+            queued += 1
+        elif status.upper() == "RUNNING":
+            css = "running"
+            running += 1
         else:
             css = "failure"
             failed += 1
@@ -130,6 +141,16 @@ else:
     html = html.replace(
         "{{FAILED}}",
         str(failed)
+    )
+
+    html = html.replace(
+        "{{QUEUED}}",
+        str(queued)
+    )
+
+    html = html.replace(
+        "{{RUNNING}}",
+        str(running)
     )
 
 
