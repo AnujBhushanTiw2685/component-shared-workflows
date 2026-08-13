@@ -146,7 +146,7 @@ for run in nightly_runs:
     repository = run["repository"]
 
     # SUCCESS
-    if run[status] == "completed" and run["conclusion"] == "success":
+    if run["status"] == "completed" and run["conclusion"] == "success":
         summary = {
             "repository": repository,
             "workflow": "Release Pipeline",
@@ -174,7 +174,7 @@ for run in nightly_runs:
         )
 
     # FAILURE
-    elif run[status] == "completed" and run["conclusion"] == "failure":
+    elif run["status"] == "completed" and run["conclusion"] == "failure":
 
         print(
             f"{repository} -> FAILURE"
