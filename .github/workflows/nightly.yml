@@ -8,7 +8,7 @@ on:
 env:
     OWNER: ${{ github.repository_owner }}
     REPOSITORIES: '["component1", "component2", "component3", "component4", "component5"]'
-    WAIT_TIME: 120
+    WAIT_TIME: 60
 
 jobs:
   nightly:
@@ -109,7 +109,7 @@ jobs:
 
                 echo "===== NIGHTLY DISPATCH RECORD ====="
                 cat artifacts/nightly_dispatches.json
-                
+
 
         # Wait for all workflows to finish
 
