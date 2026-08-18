@@ -86,7 +86,7 @@ jobs:
                         -d "{\"ref\":\"$branch\",
                              \"inputs\":{
                                \"trigger_type\":\"nightly\",
-                               \"nightly_id\":\"$NIGHTLY_ID\"
+                              #  \"nightly_id\":\"$NIGHTLY_ID\"
                               
                               }
                         
