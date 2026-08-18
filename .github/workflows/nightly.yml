@@ -8,7 +8,7 @@ on:
 env:
   OWNER: ${{ github.repository_owner }}
   REPOSITORIES: '["component1", "component2", "component3", "component4", "component5"]'
-  WAIT_TIME: 40
+  WAIT_TIME: 70
 
 jobs:
   nightly:
