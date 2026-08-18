@@ -81,7 +81,7 @@ jobs:
                         -X POST \
                         -H "Authorization: Bearer $GH_PAT" \
                         -H "Accept: application/vnd.github+json" \
-                        -H "X-GitHub-Api-Version: 2022-11-28" \
+                        -H "X-GitHub-Api-Version: 2026-03-10" \
                         "$dispatch_url" \
                         -d "{\"ref\":\"$branch\",
                              \"inputs\":{
