@@ -105,8 +105,8 @@ jobs:
                             --arg branch "$branch" \
                             --arg run_id "$run_id" \
                             --arg run_url "$run_url" \
-                            --arg nightly_id "$NIGHTLY_ID"\
-                            --arg dispatch_time "$dispatch_time" \
+                            # --arg nightly_id "$NIGHTLY_ID"\
+                            # --arg dispatch_time "$dispatch_time" \
                             '. += [{"repository": $repository, "workflow_id": $workflow_id, "branch": $branch, "run_id": ($run_id | tonumber), "run_url": $run_url, "nightly_id": $nightly_id}]' \
                             artifacts/nightly_dispatches.json > "$tmp_file"
                             mv "$tmp_file" artifacts/nightly_dispatches.json
